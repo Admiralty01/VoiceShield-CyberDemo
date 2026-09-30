@@ -7,44 +7,42 @@
     <!-- Google Fonts & Lucide Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,600;0,800;1,400&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
         /* ==========================================================================
-           VoiceShield Design System Tokens (Sticking strictly to DESIGN.md)
+           VoiceShield Executive Light Theme Tokens (DESIGN.md)
            ========================================================================== */
         :root {
-            --bg-darkness: #06090e;
-            --bg-surface: #0b0f19;
-            --card-bg: rgba(15, 23, 42, 0.75);
-            --card-bg-solid: #0f172a;
-            --card-hover: rgba(30, 41, 59, 0.85);
-            --border-subtle: rgba(255, 255, 255, 0.08);
-            --border-active: rgba(6, 182, 212, 0.4);
-            --border-glow: rgba(99, 102, 241, 0.5);
+            --bg-lightness: #f8fafc;
+            --bg-surface: #ffffff;
+            --card-bg: #ffffff;
+            --card-hover: #ffffff;
+            --border-subtle: #e2e8f0;
+            --border-active: #2563eb;
+            --border-focus: #3b82f6;
 
-            --accent-primary: #06b6d4;      /* Cyber Cyan */
-            --accent-secondary: #6366f1;    /* Deep Indigo */
-            --accent-success: #10b981;      /* Emerald / Authentic */
-            --accent-warning: #f59e0b;      /* Amber / Suspicious */
-            --accent-danger: #ef4444;       /* Crimson / Deepfake Alert */
-            --accent-purple: #a855f7;       /* Voice Conversion Accent */
+            --accent-primary: #2563eb;      /* Royal Blue */
+            --accent-secondary: #4f46e5;    /* Deep Indigo */
+            --accent-success: #059669;      /* Emerald Green */
+            --accent-warning: #d97706;      /* Amber */
+            --accent-danger: #dc2626;       /* Ruby Red */
+            --accent-purple: #7c3aed;       /* Royal Purple */
 
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --text-muted: #64748b;
-            --text-accent: #38bdf8;
+            --text-primary: #0f172a;        /* Deep Slate Pitch */
+            --text-secondary: #475569;      /* Muted Slate */
+            --text-muted: #64748b;          /* Light Slate */
+            --text-accent: #1d4ed8;        /* Vibrant Royal Blue */
 
-            --font-main: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
 
-            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
-            --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.5);
-            --shadow-cyan-glow: 0 0 20px rgba(6, 182, 212, 0.35);
-            --shadow-purple-glow: 0 0 20px rgba(168, 85, 247, 0.35);
-            --shadow-red-glow: 0 0 20px rgba(239, 68, 68, 0.35);
-            --glass-blur: blur(16px);
+            --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
+            --shadow-md: 0 4px 16px rgba(15, 23, 42, 0.06);
+            --shadow-lg: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+            --shadow-blue-glow: 0 4px 14px rgba(37, 99, 235, 0.25);
+            --shadow-purple-glow: 0 4px 14px rgba(124, 58, 237, 0.25);
         }
 
         * {
@@ -55,10 +53,10 @@
         }
 
         body {
-            background-color: var(--bg-darkness);
+            background-color: var(--bg-lightness);
             background-image: 
-                radial-gradient(circle at 15% 15%, rgba(6, 182, 212, 0.08) 0%, transparent 45%),
-                radial-gradient(circle at 85% 85%, rgba(99, 102, 241, 0.08) 0%, transparent 45%);
+                radial-gradient(circle at 10% 10%, rgba(37, 99, 235, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(124, 58, 237, 0.03) 0%, transparent 40%);
             background-attachment: fixed;
             color: var(--text-primary);
             min-height: 100vh;
@@ -74,28 +72,26 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: var(--bg-darkness);
+            background: var(--bg-lightness);
         }
         ::-webkit-scrollbar-thumb {
-            background: var(--border-subtle);
+            background: #cbd5e1;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
             background: var(--accent-primary);
         }
 
-        /* Top Header Navigation */
+        /* Top Navigation Header */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: var(--card-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
+            background: var(--bg-surface);
             border: 1px solid var(--border-subtle);
             padding: 16px 28px;
-            border-radius: 20px;
-            box-shadow: var(--shadow-lg);
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
         }
 
         .brand {
@@ -105,28 +101,27 @@
         }
 
         .brand-icon {
-            width: 46px;
-            height: 46px;
+            width: 44px;
+            height: 44px;
             background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            border-radius: 14px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #fff;
-            box-shadow: var(--shadow-cyan-glow);
+            box-shadow: var(--shadow-blue-glow);
         }
 
         .brand-title h1 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 800;
             letter-spacing: -0.5px;
+            color: var(--text-primary);
             line-height: 1.1;
         }
 
         .brand-title span {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--accent-primary);
         }
 
         .brand-subtitle {
@@ -138,16 +133,16 @@
         /* Navigation Tab Switcher */
         .nav-tabs {
             display: flex;
-            background: rgba(6, 9, 14, 0.6);
+            background: #f1f5f9;
             border: 1px solid var(--border-subtle);
             padding: 4px;
-            border-radius: 14px;
+            border-radius: 12px;
             gap: 4px;
         }
 
         .tab-btn {
-            padding: 8px 16px;
-            border-radius: 10px;
+            padding: 8px 18px;
+            border-radius: 8px;
             border: none;
             background: transparent;
             color: var(--text-secondary);
@@ -162,13 +157,13 @@
 
         .tab-btn:hover {
             color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.6);
         }
 
         .tab-btn.active {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            background: var(--accent-primary);
             color: #fff;
-            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+            box-shadow: var(--shadow-blue-glow);
         }
 
         /* Status & Telemetry Badge */
@@ -182,8 +177,8 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.3);
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
             padding: 6px 14px;
             border-radius: 20px;
             font-size: 0.85rem;
@@ -196,7 +191,7 @@
             height: 8px;
             border-radius: 50%;
             background-color: var(--accent-success);
-            box-shadow: 0 0 10px var(--accent-success);
+            box-shadow: 0 0 8px var(--accent-success);
             animation: pulse 1.8s infinite;
         }
 
@@ -209,10 +204,11 @@
             font-family: var(--font-mono);
             font-size: 0.75rem;
             color: var(--text-muted);
-            background: rgba(15, 23, 42, 0.6);
+            background: #f1f5f9;
             border: 1px solid var(--border-subtle);
             padding: 6px 12px;
-            border-radius: 12px;
+            border-radius: 10px;
+            font-weight: 600;
         }
 
         /* Layout Views Container */
@@ -233,20 +229,19 @@
         /* Card Component */
         .card {
             background: var(--card-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
             border: 1px solid var(--border-subtle);
-            border-radius: 20px;
+            border-radius: 16px;
             padding: 24px;
-            box-shadow: var(--shadow-lg);
+            box-shadow: var(--shadow-md);
             display: flex;
             flex-direction: column;
             gap: 18px;
-            transition: border-color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .card:hover {
-            border-color: rgba(255, 255, 255, 0.15);
+            border-color: #cbd5e1;
+            box-shadow: var(--shadow-lg);
         }
 
         .card-header {
@@ -258,7 +253,7 @@
         }
 
         .card-title {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 700;
             color: var(--text-primary);
             display: flex;
@@ -294,7 +289,7 @@
 
         .gauge-bg {
             fill: none;
-            stroke: rgba(255, 255, 255, 0.06);
+            stroke: #f1f5f9;
             stroke-width: 14;
         }
 
@@ -320,6 +315,7 @@
             font-weight: 800;
             font-family: var(--font-mono);
             line-height: 1;
+            color: var(--text-primary);
         }
 
         .gauge-label {
@@ -334,13 +330,13 @@
         .verdict-box {
             width: 100%;
             padding: 14px 18px;
-            border-radius: 14px;
+            border-radius: 12px;
             font-weight: 800;
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             letter-spacing: 0.5px;
-            background: rgba(16, 185, 129, 0.15);
+            background: #ecfdf5;
             border: 1px solid var(--accent-success);
-            color: var(--accent-success);
+            color: #047857;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
@@ -365,7 +361,7 @@
         .btn {
             flex: 1;
             padding: 12px 18px;
-            border-radius: 12px;
+            border-radius: 10px;
             border: none;
             font-weight: 600;
             font-size: 0.95rem;
@@ -378,31 +374,31 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            background: var(--accent-primary);
             color: #fff;
-            box-shadow: 0 4px 16px rgba(6, 182, 212, 0.3);
+            box-shadow: var(--shadow-blue-glow);
         }
 
         .btn-primary:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(6, 182, 212, 0.45);
+            background: #1d4ed8;
+            transform: translateY(-1px);
         }
 
         .btn-purple {
-            background: linear-gradient(135deg, var(--accent-purple), var(--accent-secondary));
+            background: var(--accent-purple);
             color: #fff;
             box-shadow: var(--shadow-purple-glow);
         }
 
         .btn-purple:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.45);
+            background: #6d28d9;
+            transform: translateY(-1px);
         }
 
         .btn-danger {
-            background: rgba(239, 68, 68, 0.15);
+            background: #fef2f2;
             color: var(--accent-danger);
-            border: 1px solid var(--accent-danger);
+            border: 1px solid #fecaca;
         }
 
         .btn-danger:hover:not(:disabled) {
@@ -411,14 +407,14 @@
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.06);
+            background: #f8fafc;
             color: var(--text-primary);
             border: 1px solid var(--border-subtle);
         }
 
         .btn-secondary:hover:not(:disabled) {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.2);
+            background: #f1f5f9;
+            border-color: #cbd5e1;
         }
 
         .btn:disabled {
@@ -432,9 +428,9 @@
         .canvas-container {
             width: 100%;
             height: 140px;
-            background: rgba(6, 9, 14, 0.7);
+            background: #f8fafc;
             border: 1px solid var(--border-subtle);
-            border-radius: 14px;
+            border-radius: 12px;
             position: relative;
             overflow: hidden;
         }
@@ -452,9 +448,9 @@
             gap: 6px;
             height: 100px;
             padding: 12px;
-            background: rgba(6, 9, 14, 0.7);
+            background: #f8fafc;
             border: 1px solid var(--border-subtle);
-            border-radius: 14px;
+            border-radius: 12px;
         }
 
         .mel-bar-col {
@@ -472,13 +468,14 @@
             height: 5%;
             background: linear-gradient(to top, var(--accent-primary), var(--accent-purple));
             border-radius: 3px;
-            transition: height 0.1s ease, background 0.2s ease;
+            transition: height 0.1s ease;
         }
 
         .mel-bar-label {
             font-family: var(--font-mono);
             font-size: 0.65rem;
             color: var(--text-muted);
+            font-weight: 600;
         }
 
         /* Telemetry Metrics Grid */
@@ -495,10 +492,10 @@
         }
 
         .metric-card {
-            background: rgba(6, 9, 14, 0.5);
+            background: #f8fafc;
             border: 1px solid var(--border-subtle);
             padding: 16px;
-            border-radius: 14px;
+            border-radius: 12px;
             display: flex;
             flex-direction: column;
             gap: 8px;
@@ -508,6 +505,7 @@
         .metric-card:hover {
             border-color: var(--border-active);
             transform: translateY(-2px);
+            background: #ffffff;
         }
 
         .metric-title {
@@ -528,7 +526,7 @@
         .progress-bar-bg {
             width: 100%;
             height: 6px;
-            background-color: var(--border-subtle);
+            background-color: #e2e8f0;
             border-radius: 3px;
             overflow: hidden;
         }
@@ -541,7 +539,7 @@
             transition: width 0.3s ease;
         }
 
-        /* Voice Cloner Module (Module 1 Layout) */
+        /* Voice Cloner Module Grid */
         .cloner-grid {
             grid-template-columns: 1fr 1fr;
             gap: 20px;
@@ -571,7 +569,7 @@
             width: 100%;
             height: 6px;
             border-radius: 3px;
-            background: var(--border-subtle);
+            background: #e2e8f0;
             outline: none;
             accent-color: var(--accent-primary);
             cursor: pointer;
@@ -585,7 +583,7 @@
         }
 
         .profile-card {
-            background: rgba(6, 9, 14, 0.6);
+            background: #f8fafc;
             border: 1px solid var(--border-subtle);
             border-radius: 12px;
             padding: 14px;
@@ -598,13 +596,13 @@
 
         .profile-card:hover {
             border-color: var(--accent-purple);
-            background: rgba(168, 85, 247, 0.08);
+            background: #f5f3ff;
         }
 
         .profile-card.active {
             border-color: var(--accent-purple);
-            background: rgba(168, 85, 247, 0.15);
-            box-shadow: 0 0 14px rgba(168, 85, 247, 0.25);
+            background: #f5f3ff;
+            box-shadow: 0 0 10px rgba(124, 58, 237, 0.15);
         }
 
         .profile-avatar {
@@ -621,6 +619,7 @@
         .profile-info h4 {
             font-size: 0.9rem;
             font-weight: 700;
+            color: var(--text-primary);
         }
 
         .profile-info p {
@@ -630,13 +629,13 @@
 
         /* File Drag & Drop Zone */
         .upload-zone {
-            border: 2px dashed var(--border-subtle);
-            border-radius: 14px;
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
             padding: 24px;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s ease;
-            background: rgba(6, 9, 14, 0.4);
+            background: #f8fafc;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -645,7 +644,7 @@
 
         .upload-zone:hover {
             border-color: var(--accent-primary);
-            background: rgba(6, 182, 212, 0.05);
+            background: #eff6ff;
         }
 
         .upload-icon {
@@ -655,9 +654,9 @@
 
         /* Audio Player Bar */
         .audio-player-box {
-            background: rgba(6, 9, 14, 0.7);
+            background: #f8fafc;
             border: 1px solid var(--border-subtle);
-            border-radius: 14px;
+            border-radius: 12px;
             padding: 16px;
             display: flex;
             align-items: center;
@@ -668,22 +667,23 @@
             width: 44px;
             height: 44px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            background: var(--accent-primary);
             border: none;
             color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+            box-shadow: var(--shadow-blue-glow);
             transition: transform 0.2s ease;
         }
 
         .play-btn-circle:hover {
             transform: scale(1.05);
+            background: #1d4ed8;
         }
 
-        /* Responsive Layout Adjustments */
+        /* Responsive Layout */
         @media (max-width: 1024px) {
             .dashboard-grid, .cloner-grid {
                 grid-template-columns: 1fr;
@@ -799,7 +799,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
-                        <i data-lucide="bar-chart-3"></i> STFT Mel-Spectrogram Summary (16 Spectral Frequency Bands)
+                        <i data-lucide="bar-chart-3"></i> STFT Mel-Spectrogram Summary (16 Frequency Bands)
                     </div>
                 </div>
                 <div class="mel-bars-container" id="melBarsContainer">
@@ -922,7 +922,7 @@
                 <label class="form-label">Custom Reference Audio Target (.wav / .mp3)</label>
                 <div class="upload-zone" onclick="document.getElementById('audioFileInput').click()">
                     <i data-lucide="upload-cloud" class="upload-icon" style="width: 32px; height: 32px;"></i>
-                    <div style="font-size: 0.9rem; font-weight: 600;" id="uploadFileName">Click or Drag & Drop Speaker Audio Profile</div>
+                    <div style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary);" id="uploadFileName">Click or Drag & Drop Speaker Audio Profile</div>
                     <div style="font-size: 0.75rem; color: var(--text-muted);">Supports PCM WAV, MP3, FLAC (16kHz recommended)</div>
                     <input type="file" id="audioFileInput" accept="audio/*" style="display: none;" onchange="handleFileSelect(event)">
                 </div>
@@ -946,12 +946,12 @@
                     <i data-lucide="play" id="playSynthIcon"></i>
                 </button>
                 <div style="flex: 1;">
-                    <div style="font-weight: 700; font-size: 0.95rem;" id="synthAudioTitle">Synthetic Voice Conversion Frame</div>
+                    <div style="font-weight: 700; font-size: 0.95rem; color: var(--text-primary);" id="synthAudioTitle">Synthetic Voice Conversion Frame</div>
                     <div style="font-size: 0.75rem; color: var(--text-muted);" id="synthAudioSub">Sample Rate: 16,000 Hz | Formant Ratio: 1.15</div>
                 </div>
             </div>
 
-            <div class="card" style="background: rgba(6, 9, 14, 0.4); padding: 16px;">
+            <div class="card" style="background: #f8fafc; padding: 16px; border-color: #cbd5e1;">
                 <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 8px; color: var(--accent-purple);">
                     <i data-lucide="info"></i> Threat Simulation Instructions:
                 </div>
@@ -1052,13 +1052,13 @@
             ws.onopen = () => {
                 connText.innerText = "Live Telemetry Active";
                 connDot.style.backgroundColor = "var(--accent-success)";
-                connDot.style.boxShadow = "0 0 10px var(--accent-success)";
+                connDot.style.boxShadow = "0 0 8px var(--accent-success)";
             };
 
             ws.onclose = () => {
                 connText.innerText = "WebSocket Disconnected";
                 connDot.style.backgroundColor = "var(--accent-danger)";
-                connDot.style.boxShadow = "0 0 10px var(--accent-danger)";
+                connDot.style.boxShadow = "0 0 8px var(--accent-danger)";
                 setTimeout(connectWebSocket, 3000);
             };
 
@@ -1091,27 +1091,27 @@
             // Verdict Styling
             if (det.label === 'SILENCE') {
                 gaugeMeter.style.stroke = "var(--accent-primary)";
-                verdictBox.style.background = "rgba(6, 182, 212, 0.15)";
-                verdictBox.style.border = "1px solid var(--accent-primary)";
-                verdictBox.style.color = "var(--accent-primary)";
+                verdictBox.style.background = "#eff6ff";
+                verdictBox.style.border = "1px solid #93c5fd";
+                verdictBox.style.color = "#1d4ed8";
                 verdictBox.innerHTML = '<i data-lucide="mic"></i> SILENCE / IDLE';
             } else if (risk > 65) {
                 gaugeMeter.style.stroke = "var(--accent-danger)";
-                verdictBox.style.background = "rgba(239, 68, 68, 0.15)";
-                verdictBox.style.border = "1px solid var(--accent-danger)";
-                verdictBox.style.color = "var(--accent-danger)";
+                verdictBox.style.background = "#fef2f2";
+                verdictBox.style.border = "1px solid #fecaca";
+                verdictBox.style.color = "#b91c1c";
                 verdictBox.innerHTML = '<i data-lucide="alert-triangle"></i> ⚠️ DEEPFAKE DETECTED';
             } else if (risk > 40) {
                 gaugeMeter.style.stroke = "var(--accent-warning)";
-                verdictBox.style.background = "rgba(245, 158, 11, 0.15)";
-                verdictBox.style.border = "1px solid var(--accent-warning)";
-                verdictBox.style.color = "var(--accent-warning)";
+                verdictBox.style.background = "#fffbeb";
+                verdictBox.style.border = "1px solid #fde68a";
+                verdictBox.style.color = "#b45309";
                 verdictBox.innerHTML = '<i data-lucide="zap"></i> ⚡ SUSPICIOUS SPEECH';
             } else {
                 gaugeMeter.style.stroke = "var(--accent-success)";
-                verdictBox.style.background = "rgba(16, 185, 129, 0.15)";
-                verdictBox.style.border = "1px solid var(--accent-success)";
-                verdictBox.style.color = "var(--accent-success)";
+                verdictBox.style.background = "#ecfdf5";
+                verdictBox.style.border = "1px solid #a7f3d0";
+                verdictBox.style.color = "#047857";
                 verdictBox.innerHTML = '<i data-lucide="shield-check"></i> 🛡️ AUTHENTIC VOICE';
             }
             if (window.lucide && typeof lucide.createIcons === 'function') lucide.createIcons();
@@ -1140,7 +1140,6 @@
             const melSummary = feat.mel_db_summary || [];
             for (let i = 0; i < 16; i++) {
                 const dbVal = melSummary[i] !== undefined ? melSummary[i] : -80;
-                // Normalize dB values [-80dB to 0dB] into height percentage [5% to 100%]
                 const pct = Math.max(5, Math.min(100, ((dbVal + 80) / 80) * 100));
                 const barEl = document.getElementById(`melBar_${i}`);
                 if (barEl) {
@@ -1192,24 +1191,24 @@
             stopBtn.disabled = true;
         }
 
-        // Canvas Waveform Drawing with Gradient Glow
+        // Canvas Waveform Drawing for Light Theme
         function drawWaveform() {
-            canvasCtx.fillStyle = 'rgba(6, 9, 14, 0.5)';
+            canvasCtx.fillStyle = '#f8fafc';
             canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Draw grid line
-            canvasCtx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+            // Draw center grid line
+            canvasCtx.strokeStyle = '#e2e8f0';
             canvasCtx.lineWidth = 1;
             canvasCtx.beginPath();
             canvasCtx.moveTo(0, canvas.height / 2);
             canvasCtx.lineTo(canvas.width, canvas.height / 2);
             canvasCtx.stroke();
 
-            // Draw audio curve
+            // Draw waveform curve
             const gradient = canvasCtx.createLinearGradient(0, 0, canvas.width, 0);
-            gradient.addColorStop(0, '#06b6d4');
-            gradient.addColorStop(0.5, '#6366f1');
-            gradient.addColorStop(1, '#a855f7');
+            gradient.addColorStop(0, '#2563eb');
+            gradient.addColorStop(0.5, '#4f46e5');
+            gradient.addColorStop(1, '#7c3aed');
 
             canvasCtx.lineWidth = 2;
             canvasCtx.strokeStyle = gradient;
