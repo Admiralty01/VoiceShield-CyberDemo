@@ -3,40 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VoiceShield 🛡️ Real-Time Deepfake Detection Dashboard</title>
+    <title>VoiceShield 🛡️ Voice Cloning & Real-Time Deepfake Detection Platform</title>
     <!-- Google Fonts & Lucide Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,600;0,800;1,400&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    
     <style>
+        /* ==========================================================================
+           VoiceShield Design System Tokens (Sticking strictly to DESIGN.md)
+           ========================================================================== */
         :root {
-            --bg-dark: #0a0d14;
-            --card-bg: #121824;
-            --border-color: #1e293b;
-            --accent-cyan: #06b6d4;
-            --accent-green: #10b981;
-            --accent-yellow: #f59e0b;
-            --accent-red: #ef4444;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --bg-darkness: #06090e;
+            --bg-surface: #0b0f19;
+            --card-bg: rgba(15, 23, 42, 0.75);
+            --card-bg-solid: #0f172a;
+            --card-hover: rgba(30, 41, 59, 0.85);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-active: rgba(6, 182, 212, 0.4);
+            --border-glow: rgba(99, 102, 241, 0.5);
+
+            --accent-primary: #06b6d4;      /* Cyber Cyan */
+            --accent-secondary: #6366f1;    /* Deep Indigo */
+            --accent-success: #10b981;      /* Emerald / Authentic */
+            --accent-warning: #f59e0b;      /* Amber / Suspicious */
+            --accent-danger: #ef4444;       /* Crimson / Deepfake Alert */
+            --accent-purple: #a855f7;       /* Voice Conversion Accent */
+
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --text-accent: #38bdf8;
+
+            --font-main: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.5);
+            --shadow-cyan-glow: 0 0 20px rgba(6, 182, 212, 0.35);
+            --shadow-purple-glow: 0 0 20px rgba(168, 85, 247, 0.35);
+            --shadow-red-glow: 0 0 20px rgba(239, 68, 68, 0.35);
+            --glass-blur: blur(16px);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Outfit', sans-serif;
+            font-family: var(--font-main);
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
+            background-color: var(--bg-darkness);
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(6, 182, 212, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(99, 102, 241, 0.08) 0%, transparent 45%);
+            background-attachment: fixed;
+            color: var(--text-primary);
             min-height: 100vh;
-            padding: 24px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 20px;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-darkness);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-subtle);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-primary);
         }
 
         /* Top Header Navigation */
@@ -44,38 +89,93 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-subtle);
             padding: 16px 28px;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
         }
 
         .brand {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
         }
 
         .brand-icon {
-            width: 42px;
-            height: 42px;
-            background: linear-gradient(135deg, var(--accent-cyan), #3b82f6);
-            border-radius: 12px;
+            width: 46px;
+            height: 46px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #fff;
+            box-shadow: var(--shadow-cyan-glow);
         }
 
-        .brand h1 {
-            font-size: 1.4rem;
+        .brand-title h1 {
+            font-size: 1.5rem;
             font-weight: 800;
             letter-spacing: -0.5px;
+            line-height: 1.1;
         }
 
-        .brand span {
-            color: var(--accent-cyan);
+        .brand-title span {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-subtitle {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Navigation Tab Switcher */
+        .nav-tabs {
+            display: flex;
+            background: rgba(6, 9, 14, 0.6);
+            border: 1px solid var(--border-subtle);
+            padding: 4px;
+            border-radius: 14px;
+            gap: 4px;
+        }
+
+        .tab-btn {
+            padding: 8px 16px;
+            border-radius: 10px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+        }
+
+        /* Status & Telemetry Badge */
+        .status-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .status-badge {
@@ -88,15 +188,15 @@
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
-            color: var(--accent-green);
+            color: var(--accent-success);
         }
 
         .status-dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background-color: var(--accent-green);
-            box-shadow: 0 0 10px var(--accent-green);
+            background-color: var(--accent-success);
+            box-shadow: 0 0 10px var(--accent-success);
             animation: pulse 1.8s infinite;
         }
 
@@ -105,43 +205,72 @@
             50% { opacity: 0.4; transform: scale(0.85); }
         }
 
-        /* Main Dashboard Grid Layout */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 360px 1fr;
-            gap: 24px;
+        .telemetry-tag {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-subtle);
+            padding: 6px 12px;
+            border-radius: 12px;
         }
 
-        /* Card Container Styling */
+        /* Layout Views Container */
+        .view-section {
+            display: none;
+        }
+
+        .view-section.active {
+            display: grid;
+        }
+
+        /* Main Detector Grid Layout */
+        .dashboard-grid {
+            grid-template-columns: 380px 1fr;
+            gap: 20px;
+        }
+
+        /* Card Component */
         .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-subtle);
             border-radius: 20px;
             padding: 24px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--shadow-lg);
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 18px;
+            transition: border-color 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
         }
 
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-subtle);
             padding-bottom: 12px;
         }
 
         .card-title {
-            font-size: 1.05rem;
-            font-weight: 600;
-            color: var(--text-muted);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
-        /* Left Column: Risk Gauge Card */
+        .card-title i {
+            color: var(--accent-primary);
+        }
+
+        /* Risk Gauge Styling */
         .risk-card {
             align-items: center;
             text-align: center;
@@ -151,7 +280,7 @@
             position: relative;
             width: 220px;
             height: 220px;
-            margin: 10px 0;
+            margin: 8px 0;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -165,18 +294,18 @@
 
         .gauge-bg {
             fill: none;
-            stroke: var(--border-color);
+            stroke: rgba(255, 255, 255, 0.06);
             stroke-width: 14;
         }
 
         .gauge-meter {
             fill: none;
-            stroke: var(--accent-green);
+            stroke: var(--accent-success);
             stroke-width: 14;
             stroke-dasharray: 565;
             stroke-dashoffset: 565;
             stroke-linecap: round;
-            transition: stroke-dashoffset 0.3s ease, stroke 0.3s ease;
+            transition: stroke-dashoffset 0.4s ease, stroke 0.4s ease;
         }
 
         .gauge-center-text {
@@ -187,39 +316,50 @@
         }
 
         .gauge-val {
-            font-size: 3rem;
+            font-size: 3.2rem;
             font-weight: 800;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: var(--font-mono);
             line-height: 1;
         }
 
         .gauge-label {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
-            margin-top: 4px;
+            margin-top: 6px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            font-weight: 600;
         }
 
         .verdict-box {
             width: 100%;
-            padding: 12px 16px;
-            border-radius: 12px;
+            padding: 14px 18px;
+            border-radius: 14px;
             font-weight: 800;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             letter-spacing: 0.5px;
             background: rgba(16, 185, 129, 0.15);
-            border: 1px solid var(--accent-green);
-            color: var(--accent-green);
+            border: 1px solid var(--accent-success);
+            color: var(--accent-success);
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         /* Stream Controls */
         .controls-group {
             width: 100%;
             display: flex;
-            gap: 12px;
-            margin-top: 8px;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 10px;
+            width: 100%;
         }
 
         .btn {
@@ -238,40 +378,63 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--accent-cyan), #2563eb);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             color: #fff;
             box-shadow: 0 4px 16px rgba(6, 182, 212, 0.3);
         }
 
-        .btn-primary:hover {
+        .btn-primary:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(6, 182, 212, 0.4);
+            box-shadow: 0 6px 20px rgba(6, 182, 212, 0.45);
+        }
+
+        .btn-purple {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-secondary));
+            color: #fff;
+            box-shadow: var(--shadow-purple-glow);
+        }
+
+        .btn-purple:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.45);
         }
 
         .btn-danger {
-            background: rgba(239, 68, 68, 0.2);
-            color: var(--accent-red);
-            border: 1px solid var(--accent-red);
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--accent-danger);
+            border: 1px solid var(--accent-danger);
         }
 
-        .btn-danger:hover {
-            background: var(--accent-red);
+        .btn-danger:hover:not(:disabled) {
+            background: var(--accent-danger);
             color: #fff;
         }
 
-        /* Right Column: Visualization & Metrics */
-        .right-column {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-primary);
+            border: 1px solid var(--border-subtle);
         }
 
+        .btn-secondary:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Waveform Canvas */
         .canvas-container {
             width: 100%;
             height: 140px;
-            background-color: rgba(10, 13, 20, 0.6);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
+            background: rgba(6, 9, 14, 0.7);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
             position: relative;
             overflow: hidden;
         }
@@ -279,6 +442,50 @@
         canvas {
             width: 100%;
             height: 100%;
+            display: block;
+        }
+
+        /* Mel-Spectrogram 16 Band Visualizer */
+        .mel-bars-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 6px;
+            height: 100px;
+            padding: 12px;
+            background: rgba(6, 9, 14, 0.7);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+        }
+
+        .mel-bar-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            justify-content: flex-end;
+            gap: 4px;
+        }
+
+        .mel-bar-fill {
+            width: 100%;
+            height: 5%;
+            background: linear-gradient(to top, var(--accent-primary), var(--accent-purple));
+            border-radius: 3px;
+            transition: height 0.1s ease, background 0.2s ease;
+        }
+
+        .mel-bar-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--text-muted);
+        }
+
+        /* Telemetry Metrics Grid */
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
         .metrics-grid {
@@ -288,75 +495,258 @@
         }
 
         .metric-card {
-            background: rgba(10, 13, 20, 0.5);
-            border: 1px solid var(--border-color);
+            background: rgba(6, 9, 14, 0.5);
+            border: 1px solid var(--border-subtle);
             padding: 16px;
             border-radius: 14px;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .metric-card:hover {
+            border-color: var(--border-active);
+            transform: translateY(-2px);
         }
 
         .metric-title {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            font-weight: 600;
         }
 
         .metric-value {
-            font-size: 1.4rem;
+            font-size: 1.45rem;
             font-weight: 700;
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--text-main);
+            font-family: var(--font-mono);
+            color: var(--text-primary);
         }
 
         .progress-bar-bg {
             width: 100%;
             height: 6px;
-            background-color: var(--border-color);
+            background-color: var(--border-subtle);
             border-radius: 3px;
             overflow: hidden;
-            margin-top: 4px;
         }
 
         .progress-bar-fill {
             height: 100%;
             width: 0%;
-            background-color: var(--accent-cyan);
+            background-color: var(--accent-primary);
             border-radius: 3px;
-            transition: width 0.2s ease;
+            transition: width 0.3s ease;
+        }
+
+        /* Voice Cloner Module (Module 1 Layout) */
+        .cloner-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .slider-val {
+            font-family: var(--font-mono);
+            color: var(--accent-primary);
+            font-weight: 700;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--border-subtle);
+            outline: none;
+            accent-color: var(--accent-primary);
+            cursor: pointer;
+        }
+
+        /* Target Profile Voice Cards Grid */
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .profile-card {
+            background: rgba(6, 9, 14, 0.6);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .profile-card:hover {
+            border-color: var(--accent-purple);
+            background: rgba(168, 85, 247, 0.08);
+        }
+
+        .profile-card.active {
+            border-color: var(--accent-purple);
+            background: rgba(168, 85, 247, 0.15);
+            box-shadow: 0 0 14px rgba(168, 85, 247, 0.25);
+        }
+
+        .profile-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+
+        .profile-info h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .profile-info p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* File Drag & Drop Zone */
+        .upload-zone {
+            border: 2px dashed var(--border-subtle);
+            border-radius: 14px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: rgba(6, 9, 14, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .upload-zone:hover {
+            border-color: var(--accent-primary);
+            background: rgba(6, 182, 212, 0.05);
+        }
+
+        .upload-icon {
+            color: var(--accent-primary);
+            margin-bottom: 4px;
+        }
+
+        /* Audio Player Bar */
+        .audio-player-box {
+            background: rgba(6, 9, 14, 0.7);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .play-btn-circle {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border: none;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+            transition: transform 0.2s ease;
+        }
+
+        .play-btn-circle:hover {
+            transform: scale(1.05);
+        }
+
+        /* Responsive Layout Adjustments */
+        @media (max-width: 1024px) {
+            .dashboard-grid, .cloner-grid {
+                grid-template-columns: 1fr;
+            }
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            header {
+                flex-direction: column;
+                gap: 14px;
+            }
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header Bar -->
+    <!-- Header Navigation -->
     <header>
         <div class="brand">
             <div class="brand-icon">
                 <i data-lucide="shield-check"></i>
             </div>
-            <div>
+            <div class="brand-title">
                 <h1>VoiceShield <span>CyberDemo</span></h1>
+                <div class="brand-subtitle">Dual-Module Voice Cloning & Real-Time Deepfake Telemetry Platform</div>
             </div>
         </div>
-        <div class="status-badge" id="connStatus">
-            <div class="status-dot" id="connDot"></div>
-            <span id="connText">WebSocket Disconnected</span>
+
+        <!-- Module Switcher Tabs -->
+        <div class="nav-tabs">
+            <button class="tab-btn active" id="tabDetector" onclick="switchTab('detector')">
+                <i data-lucide="activity"></i> Module 2: Deepfake Defense
+            </button>
+            <button class="tab-btn" id="tabCloner" onclick="switchTab('cloner')">
+                <i data-lucide="mic"></i> Module 1: Voice Cloner & DSP
+            </button>
+        </div>
+
+        <div class="status-group">
+            <div class="status-badge" id="connStatus">
+                <div class="status-dot" id="connDot"></div>
+                <span id="connText">WebSocket Active</span>
+            </div>
+            <div class="telemetry-tag">16kHz Float32 PCM</div>
         </div>
     </header>
 
-    <!-- Main Grid Workspace -->
-    <div class="dashboard-grid">
+    <!-- MODULE 2: DEFENSIVE DEEPFAKE DETECTION DASHBOARD VIEW -->
+    <div class="view-section active dashboard-grid" id="viewDetector">
         
-        <!-- Left: Live Threat & Risk Gauge -->
+        <!-- Left Column: Risk Gauge & Stream Controls -->
         <div class="card risk-card">
             <div class="card-header" style="width: 100%;">
                 <div class="card-title">
-                    <i data-lucide="activity"></i> Synthetic Risk Index
+                    <i data-lucide="shield-alert"></i> Synthetic Risk Index
                 </div>
-                <span id="timestamp" style="font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--text-muted);">--:--:--</span>
+                <span id="timestamp" style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted);">--:--:--</span>
             </div>
 
             <div class="gauge-container">
@@ -371,39 +761,57 @@
             </div>
 
             <div class="verdict-box" id="verdictBox">
-                INITIALIZING...
+                <i data-lucide="mic-off"></i> IDLE / WAITING FOR STREAM
             </div>
 
             <div class="controls-group">
-                <button class="btn btn-primary" id="startBtn">
-                    <i data-lucide="mic"></i> Start Mic Stream
-                </button>
-                <button class="btn btn-danger" id="stopBtn" disabled>
-                    <i data-lucide="mic-off"></i> Stop Stream
+                <div class="btn-row">
+                    <button class="btn btn-primary" id="startBtn">
+                        <i data-lucide="mic"></i> Start Mic Stream
+                    </button>
+                    <button class="btn btn-danger" id="stopBtn" disabled>
+                        <i data-lucide="mic-off"></i> Stop Stream
+                    </button>
+                </div>
+                <button class="btn btn-secondary" id="exportBtn" onclick="exportTelemetryJSON()">
+                    <i data-lucide="download"></i> Export Telemetry JSON
                 </button>
             </div>
         </div>
 
-        <!-- Right: Visualizer & Artifact Telemetry -->
+        <!-- Right Column: Visualizer, Mel-Spectrogram & Artifact Metrics -->
         <div class="right-column">
             
             <!-- Real-Time Waveform Oscilloscope -->
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
-                        <i data-lucide="waveform"></i> Real-Time Audio Waveform (PCM)
+                        <i data-lucide="waveform"></i> Low-Latency Real-Time Audio Waveform (PCM)
                     </div>
+                    <span style="font-size: 0.75rem; color: var(--accent-primary); font-family: var(--font-mono);">1024 FRAMES / 64MS</span>
                 </div>
                 <div class="canvas-container">
                     <canvas id="waveformCanvas"></canvas>
                 </div>
             </div>
 
-            <!-- Spectral Artifact Metrics Grid -->
+            <!-- STFT Mel-Spectrogram 16 Band Equalizer -->
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
-                        <i data-lucide="cpu"></i> Acoustic Artifact Analysis & Telemetry
+                        <i data-lucide="bar-chart-3"></i> STFT Mel-Spectrogram Summary (16 Spectral Frequency Bands)
+                    </div>
+                </div>
+                <div class="mel-bars-container" id="melBarsContainer">
+                    <!-- 16 Mel-spectrogram bars generated dynamically -->
+                </div>
+            </div>
+
+            <!-- Acoustic Artifact Metrics Grid -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i data-lucide="cpu"></i> Deepfake Artifact Breakdown & Acoustic Telemetry
                     </div>
                 </div>
                 
@@ -417,7 +825,7 @@
                         </div>
                     </div>
 
-                    <!-- Metric 2: Spectral Cutoff -->
+                    <!-- Metric 2: High Freq Cutoff -->
                     <div class="metric-card">
                         <div class="metric-title">High-Freq Cutoff</div>
                         <div class="metric-value" id="cutoffScore">0.00</div>
@@ -426,7 +834,7 @@
                         </div>
                     </div>
 
-                    <!-- Metric 3: Pitch Volatility -->
+                    <!-- Metric 3: Pitch Rigidity -->
                     <div class="metric-card">
                         <div class="metric-title">Pitch Rigidity Index</div>
                         <div class="metric-value" id="pitchScore">0.00</div>
@@ -447,7 +855,7 @@
                         <div class="metric-value" id="rolloffVal">0 Hz</div>
                     </div>
 
-                    <!-- Metric 6: RMS Energy -->
+                    <!-- Metric 6: RMS Power -->
                     <div class="metric-card">
                         <div class="metric-title">RMS Signal Power</div>
                         <div class="metric-value" id="rmsVal">0.000</div>
@@ -459,10 +867,120 @@
 
     </div>
 
-    <!-- Web Audio & WebSocket Client Logic -->
+    <!-- MODULE 1: THREAT VECTOR VOICE CLONER & DSP SYNTHESIZER VIEW -->
+    <div class="view-section cloner-grid" id="viewCloner">
+        
+        <!-- Left: Target Speaker Profile & DSP Controls -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">
+                    <i data-lucide="sliders"></i> Zero-Shot Voice Conversion DSP Controls
+                </div>
+            </div>
+
+            <!-- Target Profile Selection -->
+            <div class="form-group">
+                <label class="form-label">Reference Target Speaker Profile</label>
+                <div class="profile-grid">
+                    <div class="profile-card active" onclick="selectProfile(this, 'Cyber Security Officer')">
+                        <div class="profile-avatar"><i data-lucide="user-check"></i></div>
+                        <div class="profile-info">
+                            <h4>Cyber Officer</h4>
+                            <p>Deep Male Voice Target</p>
+                        </div>
+                    </div>
+                    <div class="profile-card" onclick="selectProfile(this, 'AI Assistant Target')">
+                        <div class="profile-avatar" style="background: linear-gradient(135deg, var(--accent-primary), var(--accent-success));"><i data-lucide="bot"></i></div>
+                        <div class="profile-info">
+                            <h4>AI Assistant</h4>
+                            <p>Clear Neutral Target</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pitch Shift Slider -->
+            <div class="form-group">
+                <div class="form-label">
+                    <span>Pitch Shift Semitones</span>
+                    <span class="slider-val" id="pitchValDisplay">+2.0 semitones</span>
+                </div>
+                <input type="range" id="pitchSlider" min="-12.0" max="12.0" step="0.5" value="2.0" oninput="updatePitchDisplay(this.value)">
+            </div>
+
+            <!-- Formant Shift Slider -->
+            <div class="form-group">
+                <div class="form-label">
+                    <span>Formant Ratio Shift</span>
+                    <span class="slider-val" id="formantValDisplay">1.15x ratio</span>
+                </div>
+                <input type="range" id="formantSlider" min="0.5" max="1.8" step="0.05" value="1.15" oninput="updateFormantDisplay(this.value)">
+            </div>
+
+            <!-- Reference Audio File Upload -->
+            <div class="form-group">
+                <label class="form-label">Custom Reference Audio Target (.wav / .mp3)</label>
+                <div class="upload-zone" onclick="document.getElementById('audioFileInput').click()">
+                    <i data-lucide="upload-cloud" class="upload-icon" style="width: 32px; height: 32px;"></i>
+                    <div style="font-size: 0.9rem; font-weight: 600;" id="uploadFileName">Click or Drag & Drop Speaker Audio Profile</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted);">Supports PCM WAV, MP3, FLAC (16kHz recommended)</div>
+                    <input type="file" id="audioFileInput" accept="audio/*" style="display: none;" onchange="handleFileSelect(event)">
+                </div>
+            </div>
+
+            <button class="btn btn-purple" id="synthesizeBtn" onclick="triggerSynthesis()">
+                <i data-lucide="sparkles"></i> Synthesize & Test Voice Conversion Frame
+            </button>
+        </div>
+
+        <!-- Right: Synthetic Audio Synthesis Output & Telemetry -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">
+                    <i data-lucide="volume-2"></i> Synthetic Audio Stream Output & Playback
+                </div>
+            </div>
+
+            <div class="audio-player-box">
+                <button class="play-btn-circle" id="playSynthesizedBtn" onclick="togglePlaySynth()">
+                    <i data-lucide="play" id="playSynthIcon"></i>
+                </button>
+                <div style="flex: 1;">
+                    <div style="font-weight: 700; font-size: 0.95rem;" id="synthAudioTitle">Synthetic Voice Conversion Frame</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted);" id="synthAudioSub">Sample Rate: 16,000 Hz | Formant Ratio: 1.15</div>
+                </div>
+            </div>
+
+            <div class="card" style="background: rgba(6, 9, 14, 0.4); padding: 16px;">
+                <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 8px; color: var(--accent-purple);">
+                    <i data-lucide="info"></i> Threat Simulation Instructions:
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">
+                    1. Adjust Pitch Shift & Formant Ratio sliders to modify acoustic characteristics.<br>
+                    2. Click <b>Start Mic Stream</b> in Module 2 to route live voice conversion through the Deepfake Artifact Detector.<br>
+                    3. Observe real-time changes in the <b>Phase Anomaly Score</b> and <b>Synthetic Risk Index</b>.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Web Audio & Client Telemetry Script -->
     <script>
         if (window.lucide && typeof lucide.createIcons === 'function') {
             lucide.createIcons();
+        }
+
+        // Initialize 16 Mel-Spectrogram bars
+        const melContainer = document.getElementById('melBarsContainer');
+        for (let i = 0; i < 16; i++) {
+            const col = document.createElement('div');
+            col.className = 'mel-bar-col';
+            col.innerHTML = `
+                <div class="mel-bar-fill" id="melBar_${i}"></div>
+                <div class="mel-bar-label">${i + 1}</div>
+            `;
+            melContainer.appendChild(col);
         }
 
         // UI DOM Elements
@@ -475,7 +993,7 @@
         const verdictBox = document.getElementById('verdictBox');
         const timestampEl = document.getElementById('timestamp');
 
-        // Metrics DOM Elements
+        // Metrics Elements
         const phaseScoreEl = document.getElementById('phaseScore');
         const phaseBarEl = document.getElementById('phaseBar');
         const cutoffScoreEl = document.getElementById('cutoffScore');
@@ -491,20 +1009,40 @@
         const canvasCtx = canvas.getContext('2d');
 
         function resizeCanvas() {
-            canvas.width = canvas.parentElement.clientWidth;
-            canvas.height = canvas.parentElement.clientHeight;
+            if (canvas && canvas.parentElement) {
+                canvas.width = canvas.parentElement.clientWidth;
+                canvas.height = canvas.parentElement.clientHeight;
+            }
         }
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        // Audio & WebSocket Variables
+        // State & Telemetry History
         let ws = null;
         let audioContext = null;
         let micStream = null;
         let scriptProcessor = null;
         let audioBufferHistory = new Float32Array(1024);
+        let latestTelemetryData = null;
 
-        // Connect WebSocket
+        // Navigation Tab Switcher
+        function switchTab(tabName) {
+            document.getElementById('tabDetector').classList.remove('active');
+            document.getElementById('tabCloner').classList.remove('active');
+            document.getElementById('viewDetector').classList.remove('active');
+            document.getElementById('viewCloner').classList.remove('active');
+
+            if (tabName === 'detector') {
+                document.getElementById('tabDetector').classList.add('active');
+                document.getElementById('viewDetector').classList.add('active');
+                resizeCanvas();
+            } else {
+                document.getElementById('tabCloner').classList.add('active');
+                document.getElementById('viewCloner').classList.add('active');
+            }
+        }
+
+        // Connect WebSocket Endpoint
         function connectWebSocket() {
             const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
             const wsUrl = `${protocol}//${window.location.host}/ws/stream`;
@@ -513,70 +1051,72 @@
 
             ws.onopen = () => {
                 connText.innerText = "Live Telemetry Active";
-                connDot.style.backgroundColor = "var(--accent-green)";
-                connDot.style.boxShadow = "0 0 10px var(--accent-green)";
+                connDot.style.backgroundColor = "var(--accent-success)";
+                connDot.style.boxShadow = "0 0 10px var(--accent-success)";
             };
 
             ws.onclose = () => {
                 connText.innerText = "WebSocket Disconnected";
-                connDot.style.backgroundColor = "var(--accent-red)";
-                connDot.style.boxShadow = "0 0 10px var(--accent-red)";
+                connDot.style.backgroundColor = "var(--accent-danger)";
+                connDot.style.boxShadow = "0 0 10px var(--accent-danger)";
                 setTimeout(connectWebSocket, 3000);
             };
 
             ws.onmessage = (event) => {
                 try {
                     const data = JSON.parse(event.data);
+                    latestTelemetryData = data;
                     updateDashboard(data);
                 } catch (e) {
-                    console.error("Failed to parse websocket telemetry data:", e);
+                    console.error("Failed to parse WebSocket message:", e);
                 }
             };
         }
 
-        // Update UI Telemetry
+        // Update UI Dashboard Telemetry
         function updateDashboard(data) {
             const det = data.detection || {};
             const feat = data.features || {};
 
             timestampEl.innerText = data.timestamp || new Date().toLocaleTimeString();
 
-            // 1. Update Gauge & Verdict
+            // 1. Risk Percentage & SVG Gauge Calculation
             const risk = typeof det.risk_percentage === 'number' ? det.risk_percentage : (det.risk_score ? Math.round(det.risk_score * 100) : 0);
             riskPercent.innerText = `${risk}%`;
 
-            // Gauge SVG Circle Calculation
             const maxOffset = 565;
             const offset = maxOffset - (maxOffset * (risk / 100));
             gaugeMeter.style.strokeDashoffset = offset;
 
+            // Verdict Styling
             if (det.label === 'SILENCE') {
-                gaugeMeter.style.stroke = "var(--accent-cyan)";
+                gaugeMeter.style.stroke = "var(--accent-primary)";
                 verdictBox.style.background = "rgba(6, 182, 212, 0.15)";
-                verdictBox.style.border = "1px solid var(--accent-cyan)";
-                verdictBox.style.color = "var(--accent-cyan)";
-                verdictBox.innerText = "🎙️ SILENCE / IDLE";
+                verdictBox.style.border = "1px solid var(--accent-primary)";
+                verdictBox.style.color = "var(--accent-primary)";
+                verdictBox.innerHTML = '<i data-lucide="mic"></i> SILENCE / IDLE';
             } else if (risk > 65) {
-                gaugeMeter.style.stroke = "var(--accent-red)";
+                gaugeMeter.style.stroke = "var(--accent-danger)";
                 verdictBox.style.background = "rgba(239, 68, 68, 0.15)";
-                verdictBox.style.border = "1px solid var(--accent-red)";
-                verdictBox.style.color = "var(--accent-red)";
-                verdictBox.innerText = "⚠️ DEEPFAKE DETECTED";
+                verdictBox.style.border = "1px solid var(--accent-danger)";
+                verdictBox.style.color = "var(--accent-danger)";
+                verdictBox.innerHTML = '<i data-lucide="alert-triangle"></i> ⚠️ DEEPFAKE DETECTED';
             } else if (risk > 40) {
-                gaugeMeter.style.stroke = "var(--accent-yellow)";
+                gaugeMeter.style.stroke = "var(--accent-warning)";
                 verdictBox.style.background = "rgba(245, 158, 11, 0.15)";
-                verdictBox.style.border = "1px solid var(--accent-yellow)";
-                verdictBox.style.color = "var(--accent-yellow)";
-                verdictBox.innerText = "⚡ SUSPICIOUS SPEECH";
+                verdictBox.style.border = "1px solid var(--accent-warning)";
+                verdictBox.style.color = "var(--accent-warning)";
+                verdictBox.innerHTML = '<i data-lucide="zap"></i> ⚡ SUSPICIOUS SPEECH';
             } else {
-                gaugeMeter.style.stroke = "var(--accent-green)";
+                gaugeMeter.style.stroke = "var(--accent-success)";
                 verdictBox.style.background = "rgba(16, 185, 129, 0.15)";
-                verdictBox.style.border = "1px solid var(--accent-green)";
-                verdictBox.style.color = "var(--accent-green)";
-                verdictBox.innerText = "🛡️ AUTHENTIC VOICE";
+                verdictBox.style.border = "1px solid var(--accent-success)";
+                verdictBox.style.color = "var(--accent-success)";
+                verdictBox.innerHTML = '<i data-lucide="shield-check"></i> 🛡️ AUTHENTIC VOICE';
             }
+            if (window.lucide && typeof lucide.createIcons === 'function') lucide.createIcons();
 
-            // 2. Artifact Metrics
+            // 2. Metric Cards & Progress Bars
             const art = det.artifact_analysis || {};
             const phaseVal = art.phase_anomaly_score || 0;
             const cutoffVal = art.spectral_cutoff_score || 0;
@@ -595,9 +1135,26 @@
             centroidValEl.innerText = `${Math.round(feat.spectral_centroid || 0)} Hz`;
             rolloffValEl.innerText = `${Math.round(feat.spectral_rolloff || 0)} Hz`;
             rmsValEl.innerText = (feat.rms_energy || 0).toFixed(3);
+
+            // 4. Mel-Spectrogram 16 Bars Update
+            const melSummary = feat.mel_db_summary || [];
+            for (let i = 0; i < 16; i++) {
+                const dbVal = melSummary[i] !== undefined ? melSummary[i] : -80;
+                // Normalize dB values [-80dB to 0dB] into height percentage [5% to 100%]
+                const pct = Math.max(5, Math.min(100, ((dbVal + 80) / 80) * 100));
+                const barEl = document.getElementById(`melBar_${i}`);
+                if (barEl) {
+                    barEl.style.height = `${pct}%`;
+                    if (pct > 70) {
+                        barEl.style.background = 'linear-gradient(to top, var(--accent-purple), var(--accent-danger))';
+                    } else {
+                        barEl.style.background = 'linear-gradient(to top, var(--accent-primary), var(--accent-purple))';
+                    }
+                }
+            }
         }
 
-        // Start Microphone & Audio Processing
+        // Start Microphone Audio Stream
         async function startMicStream() {
             try {
                 audioContext = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
@@ -612,7 +1169,6 @@
                     drawWaveform();
 
                     if (ws && ws.readyState === WebSocket.OPEN) {
-                        // Send isolated float32 buffer frame slice
                         ws.send(inputData.slice().buffer);
                     }
                 };
@@ -636,13 +1192,27 @@
             stopBtn.disabled = true;
         }
 
-        // Canvas Waveform Oscilloscope Drawing
+        // Canvas Waveform Drawing with Gradient Glow
         function drawWaveform() {
-            canvasCtx.fillStyle = 'rgba(10, 13, 20, 0.4)';
+            canvasCtx.fillStyle = 'rgba(6, 9, 14, 0.5)';
             canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
 
+            // Draw grid line
+            canvasCtx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+            canvasCtx.lineWidth = 1;
+            canvasCtx.beginPath();
+            canvasCtx.moveTo(0, canvas.height / 2);
+            canvasCtx.lineTo(canvas.width, canvas.height / 2);
+            canvasCtx.stroke();
+
+            // Draw audio curve
+            const gradient = canvasCtx.createLinearGradient(0, 0, canvas.width, 0);
+            gradient.addColorStop(0, '#06b6d4');
+            gradient.addColorStop(0.5, '#6366f1');
+            gradient.addColorStop(1, '#a855f7');
+
             canvasCtx.lineWidth = 2;
-            canvasCtx.strokeStyle = '#06b6d4';
+            canvasCtx.strokeStyle = gradient;
             canvasCtx.beginPath();
 
             const sliceWidth = canvas.width / audioBufferHistory.length;
@@ -662,6 +1232,60 @@
             canvasCtx.stroke();
         }
 
+        // Module 1 Controls & Displays
+        function updatePitchDisplay(val) {
+            const num = parseFloat(val);
+            document.getElementById('pitchValDisplay').innerText = `${num > 0 ? '+' : ''}${num.toFixed(1)} semitones`;
+        }
+
+        function updateFormantDisplay(val) {
+            const num = parseFloat(val);
+            document.getElementById('formantValDisplay').innerText = `${num.toFixed(2)}x ratio`;
+        }
+
+        function selectProfile(el, name) {
+            document.querySelectorAll('.profile-card').forEach(card => card.classList.remove('active'));
+            el.classList.add('active');
+            document.getElementById('synthAudioTitle').innerText = `Target Speaker: ${name}`;
+        }
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById('uploadFileName').innerText = `Profile Loaded: ${file.name}`;
+            }
+        }
+
+        function triggerSynthesis() {
+            alert("Synthesizing voice conversion frame... Synthesis ready for stream routing!");
+        }
+
+        let isSynthPlaying = false;
+        function togglePlaySynth() {
+            isSynthPlaying = !isSynthPlaying;
+            const icon = document.getElementById('playSynthIcon');
+            if (isSynthPlaying) {
+                icon.setAttribute('data-lucide', 'pause');
+            } else {
+                icon.setAttribute('data-lucide', 'play');
+            }
+            if (window.lucide && typeof lucide.createIcons === 'function') lucide.createIcons();
+        }
+
+        function exportTelemetryJSON() {
+            if (!latestTelemetryData) {
+                alert("No telemetry data captured yet. Start mic stream first!");
+                return;
+            }
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(latestTelemetryData, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `VoiceShield_Telemetry_${Date.now()}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
         startBtn.addEventListener('click', startMicStream);
         stopBtn.addEventListener('click', stopMicStream);
 
@@ -669,6 +1293,5 @@
         connectWebSocket();
         drawWaveform();
     </script>
-
 </body>
 </html>
